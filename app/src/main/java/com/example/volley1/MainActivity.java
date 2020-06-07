@@ -15,10 +15,14 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.volley1.controller.AppController;
 import com.example.volley1.data.QuestionBank;
+import com.example.volley1.model.Question;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,48 +34,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-     //   req = Volley.newRequestQueue(this);
 
-//        JsonObjectRequest  jso =new JsonObjectRequest(Request.Method.GET, url1, null, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                Log.d("json", "onResponse: "+response);
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.d("json", "onErrorResponse: "+"error");
-//            }
-//        });
-//
-//
-//        req.add(jso);
-//    }
 
-//        JsonArrayRequest jso = new JsonArrayRequest(Request.Method.GET, url1, null, new Response.Listener<JSONArray>() {
-//            @Override
-//            public void onResponse(JSONArray response) {
-//
-//                for (int i = 0; i < response.length(); i++) {
-//
-//                    try {
-//                        JSONObject js = response.getJSONObject(i);
-//                        Log.d("json", "onResponse: " + js.getInt("Id"));
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                }
-//
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//            }
-//        });
-
-         new QuestionBank().getQuestion();
-
+        //List<Question> li= new QuestionBank().getQuestion();
+        Log.d("he1","start");
+        new QuestionBank().getQuestion(new AnswerAsync() {
+            @Override
+            public void proc(ArrayList<Question> qr) {
+                Log.d("hell", "onCreate: "+qr);
+            }
+        });
+       // Log.d("hello", "onCreate: "+li);
     }
 }

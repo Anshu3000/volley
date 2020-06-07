@@ -7,6 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.example.volley1.AnswerAsync;
 import com.example.volley1.controller.AppController;
 import com.example.volley1.model.Question;
 
@@ -24,7 +25,7 @@ public class QuestionBank {
     }
 
 
-    public List<Question> getQuestion(){
+    public List<Question> getQuestion(final AnswerAsync callB){
 
         JsonArrayRequest jso= new JsonArrayRequest(Request.Method.GET, url1, null, new Response.Listener<JSONArray>() {
             @Override
@@ -38,18 +39,24 @@ public class QuestionBank {
                          Question qu=new Question(jsonA.getString(0),jsonA.getBoolean(1));
                           arl.add(qu);
                        } catch (JSONException e) {
+                        Log.d("jso1", "onResponse: "+"error occur in json"+i);
                         e.printStackTrace();
                        }
-
+//                    if(callB!=null)
+//                        callB.proc(arl);
                 }
-
+                if(callB!=null)
+                    callB.proc(arl);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.d("QuestionBan", "onErrorResponse: "+"erroroccur");
             }
         });
+
+//         if(callB!=null)
+//             callB.proc(arl);
 
         AppController.getInstance().addRequestQueue(jso);
 

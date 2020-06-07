@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Volley1</string>
+     <string name="true1">TRUE</string>
+     <string name="false1">FALSE</string>
 </resources>
