@@ -2,4 +2,9 @@
     <string name="app_name">Volley1</string>
      <string name="true1">TRUE</string>
      <string name="false1">FALSE</string>
+     <string name="start1">start a quiz</string>
+    <string name="count1">0 out of 100</string>
+    <string name="todo1">nextquestion</string>
+    <string name="todo">content</string>
+    <string name="score">Score</string>
 </resources>
