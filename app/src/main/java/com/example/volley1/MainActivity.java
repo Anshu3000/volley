@@ -2,14 +2,13 @@ package com.example.volley1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.textclassifier.TextLinks;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,13 +34,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
      private TextView showque,showcot,scoretext;
      private Button true1,false1;
-     private ImageView Next1,Prev1;
-     private ArrayList<Question> qr12;
+     private ImageView Next1;
+    private ImageView Prev1;
+     private ArrayList<Question> qr12=new ArrayList<>();
      private int i=0,score=0;
+     private  static final String mess="savei";
+     //private static final String key1="Questno1";
+    SharedPreferences ed;
+    List<Question> li;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         showcot=findViewById(R.id.counttext);
@@ -60,20 +65,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         Log.d("he1","start");
-        new QuestionBank().getQuestion(new AnswerAsync() {
+        li=new QuestionBank().getQuestion(new AnswerAsync() {
             @Override
             public void proc(ArrayList<Question> qr) {
                 qr12=qr;
-                Log.d("hell", "onCreate: "+qr12);
+               // Log.d("hell", "onCreate: "+qr12);
             }
         });
 
+        //retervie qquesnumber where you last of;
+     ed=getSharedPreferences(mess,MODE_PRIVATE);
+     i=ed.getInt("ques123",0);
+        Log.d("ques", "onCreate: "+i);
 
 
     }
 
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("ques","onresume"+i);
+       // update(i);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences sh= getSharedPreferences(mess,MODE_PRIVATE);
+        SharedPreferences.Editor editor=sh.edit();
+        editor.putInt("ques123",i);
+        editor.commit();
+        Log.d("quesno1","on pause"+i);
+    }
+
     @Override
   public void onClick(View v) {
+
 
         switch(v.getId()){
 
@@ -110,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
    public  void check(boolean che)
    {  boolean ans=qr12.get(i).isAns();
-      Toast toa;
+
         if(che==ans)
         {   Toast.makeText(this,"RIGHT answer",Toast.LENGTH_SHORT).show();
              score=score+10;
